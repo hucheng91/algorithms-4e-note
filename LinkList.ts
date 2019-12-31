@@ -15,10 +15,19 @@ class LinkList<T>{
         this.length =0;
         this.head = null
     }
+    private _isOutOfIndex(position){
+        if( position === undefined
+            || position === null 
+            || position < 0 
+            || position > this.length){
+                return true
+        }
+        return false;
+    }
     getEleAt(position:number){
         // @ts-ignore
         let i = 0;
-        if(position < 0 || position > this.length){return null}
+        if(this._isOutOfIndex(position)){ return null }
         let current = this.head;
         for (let i = 0; i < position; i++) {
             current = current.next;
@@ -48,7 +57,7 @@ class LinkList<T>{
         return _fn.append()
     }
     insert(ele:T,position:number){
-        if(position < 0 || position > this.length){return null}
+        if(this._isOutOfIndex(position)){ return null }
         // @ts-ignore
         let node = new LinkNode<T>(ele)
         const _fn = {
@@ -69,6 +78,21 @@ class LinkList<T>{
         }
         this.length ++
         return true
+    }
+    removeAt(position:number): T{
+        if(this._isOutOfIndex(position)){ return null }
+
+        let currentNode;
+        if(position === 0){
+            currentNode = this.head.next;
+            this.head = currentNode;
+        }else{
+            const preNode = this.getEleAt(position-1)
+            currentNode = preNode.next;
+            preNode.next = currentNode.next;
+        }
+        this.length--
+        return currentNode.data;
     }
 }
 const linkList = new LinkList<number>()
