@@ -1,21 +1,21 @@
 // @ts-ignore
-class LinkNode{
-    data: any;
-    next: any;
-    constructor(data){
+class LinkNode<T>{
+    data: T;
+    next: LinkNode<T>;
+    constructor(data: T){
         this.data = data; // 当前节点
         this.next = null; // 下一个元素
     }
 }
 
-class LinkList{
+class LinkList<T>{
     length: number;
-    head: LinkNode;
+    head: LinkNode<T>;
     constructor(){
         this.length =0;
         this.head = null
     }
-    getEleAt(position){
+    getEleAt(position:number){
         // @ts-ignore
         let i = 0;
         if(position < 0 || position > this.length){return null}
@@ -25,9 +25,9 @@ class LinkList{
         }
         return current;
     }
-    append(ele){
+    append(ele:T){
         // @ts-ignore
-        const node = new LinkNodeele(ele);
+        const node = new LinkNode<T>(ele);
         const _fn = {
             frist: () => {
                 this.head = node;
@@ -47,10 +47,10 @@ class LinkList{
 
         return _fn.append()
     }
-    insert(ele,position){
+    insert(ele:T,position:number){
         if(position < 0 || position > this.length){return null}
         // @ts-ignore
-        let node = new Node(ele)
+        let node = new LinkNode<T>(ele)
         const _fn = {
             frist: () =>  {
                 node.next = this.head;
@@ -71,7 +71,7 @@ class LinkList{
         return true
     }
 }
-const linkList = new LinkList()
+const linkList = new LinkList<number>()
 linkList.append(1)
 linkList.append(2)
 linkList.append(3)
