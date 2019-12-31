@@ -1,5 +1,7 @@
 // @ts-ignore
-class Node{
+class LinkNode{
+    data: any;
+    next: any;
     constructor(data){
         this.data = data; // 当前节点
         this.next = null; // 下一个元素
@@ -7,6 +9,8 @@ class Node{
 }
 
 class LinkList{
+    length: number;
+    head: LinkNode;
     constructor(){
         this.length =0;
         this.head = null
@@ -23,7 +27,7 @@ class LinkList{
     }
     append(ele){
         // @ts-ignore
-        const node = new Node(ele)
+        const node = new LinkNodeele(ele);
         const _fn = {
             frist: () => {
                 this.head = node;
