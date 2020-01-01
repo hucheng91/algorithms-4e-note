@@ -78,6 +78,16 @@ class LinkList<T>{
         }
         this.length ++
         return true
+    } 
+    indexOf (ele) {
+        let current = this.head;
+        for (let i = 0; i < this.length; i++) {
+            if (current.data === ele){
+                return i;
+            } 
+            current = current.next;
+        }
+        return -1;
     }
     removeAt(position:number): T{
         if(this._isOutOfIndex(position)){ return null }
