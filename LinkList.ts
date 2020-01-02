@@ -1,4 +1,5 @@
 // @ts-ignore
+
 class LinkNode<T>{
     data: T;
     next: LinkNode<T>;
@@ -113,4 +114,8 @@ linkList.append(4)
 linkList.append(5)
 linkList.append(6)
 linkList.append(7)
+linkList.insert(10,3)
+console.log(JSON.stringify(linkList))
+console.log('indexof',linkList.indexOf(10))
+linkList.removeAt(3)
 console.log(JSON.stringify(linkList))
