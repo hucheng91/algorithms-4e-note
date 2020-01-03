@@ -58,6 +58,20 @@ class DoubleLinkedList<T> extends LinkList<T>{
     }
     insert(ele: T,position: number){
         if(this._isOutOfIndex(position)){return null}
+        const node = new DoubleLinkedNode<T>(ele)
+        const _fn = {
+            head: () => {
+                this.head.pre = node;
+                node.next = this.head;
+                this.head = node;
+            },
+            tail: () => {
+
+            },
+            other: () => {
+
+            }
+        }
     }
         
 }
