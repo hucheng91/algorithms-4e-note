@@ -16,7 +16,7 @@ class LinkList<T>{
         this.length =0;
         this.head = null
     }
-    private _isOutOfIndex(position){
+    protected _isOutOfIndex(position){
         if( position === undefined
             || position === null 
             || position < 0 
@@ -35,7 +35,7 @@ class LinkList<T>{
         }
         return current;
     }
-    append(ele:T){
+    append(ele:T):LinkNode<T>{
         // @ts-ignore
         const node = new LinkNode<T>(ele);
         const _fn = {
@@ -106,6 +106,8 @@ class LinkList<T>{
         return currentNode.data;
     }
 }
+export default LinkList
+export {LinkNode}
 const linkList = new LinkList<number>()
 linkList.append(1)
 linkList.append(2)
