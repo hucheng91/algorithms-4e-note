@@ -1,7 +1,7 @@
 {
     "name": "algo-learn",
     "scripts": {
-        "eslint": "prettier-eslint $(pwd)/**/*.ts --write && eslint ./ -c .eslintrc.js --ext .ts --fix",
+        "eslint": "prettier-eslint $(pwd)/src/**/*.ts --write && eslint ./src -c .eslintrc.js --ext .ts --fix",
         "lint": "lint-staged ."
     },
     "devDependencies": {
