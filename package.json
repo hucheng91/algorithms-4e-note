@@ -1,0 +1,35 @@
+{
+    "name": "algo-learn",
+    "scripts": {
+        "eslint": "prettier-eslint $(pwd)/**/*.ts --write && eslint ./ -c .eslintrc.js --ext .ts --fix",
+        "lint": "lint-staged ."
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^2.33.0",
+        "eslint": "^5.16.0",
+        "eslint-plugin-flowtype": "^4.7.0",
+        "eslint-plugin-jsx-a11y": "^6.2.3",
+        "eslint-plugin-react": "^7.20.0",
+        "eslint-plugin-react-hooks": "^4.0.2",
+        "eslint-plugin-standard": "^4.0.1",
+        "husky": "^4.0.3",
+        "lint-staged": "^9.5.0",
+        "prettier": "^1.19.1",
+        "prettier-eslint-cli": "^5.0.0",
+        "@typescript-eslint/parser": "^2.33.0",
+        "eslint-config-standard": "^14.1.1",
+        "eslint-plugin-import": "^2.20.2",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-promise": "^4.2.1"
+    },
+    "husky": {
+        "hooks": {
+            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+            "pre-commit": "lint-staged"
+        }
+    },
+    "dependencies": {
+        "@commitlint/cli": "^8.3.5",
+        "@commitlint/config-conventional": "^8.3.4"
+    }
+}
