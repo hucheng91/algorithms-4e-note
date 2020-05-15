@@ -4,20 +4,20 @@
  * @Description: here is des
  */
 import LinkList from './LinkedList';
-class DoubleLinkedNode<T> {
+class DoublyLinkedNode<T> {
     data: T;
-    pre: DoubleLinkedNode<T>;
-    next: DoubleLinkedNode<T>;
+    pre: DoublyLinkedNode<T>;
+    next: DoublyLinkedNode<T>;
     constructor (data) {
         this.data = data;
         this.pre = null;
         this.next = null;
     }
 }
-class DoubleLinkedList<T> extends LinkList<T> {
+class DoublyLinkedList<T> extends LinkList<T> {
     length: number;
-    head: DoubleLinkedNode<T>;
-    tail: DoubleLinkedNode<T>;
+    head: DoublyLinkedNode<T>;
+    tail: DoublyLinkedNode<T>;
     constructor () {
         super();
         this.length = 0;
@@ -37,8 +37,8 @@ class DoubleLinkedList<T> extends LinkList<T> {
         return current;
     }
 
-    append (ele: T): DoubleLinkedNode<T> {
-        const node = new DoubleLinkedNode<T>(ele);
+    append (ele: T): DoublyLinkedNode<T> {
+        const node = new DoublyLinkedNode<T>(ele);
         const _fn = {
             frist: () => {
                 this.head = node;
@@ -63,7 +63,7 @@ class DoubleLinkedList<T> extends LinkList<T> {
         if (this._isOutOfIndex(position)) {
             return null;
         }
-        const node = new DoubleLinkedNode<T>(ele);
+        const node = new DoublyLinkedNode<T>(ele);
         const _fn = {
             head: () => {
                 this.head.pre = node;
@@ -75,5 +75,5 @@ class DoubleLinkedList<T> extends LinkList<T> {
         };
     }
 }
-export default DoubleLinkedList;
-export { DoubleLinkedList, DoubleLinkedNode };
+export default DoublyLinkedList;
+export { DoublyLinkedList, DoublyLinkedNode };
