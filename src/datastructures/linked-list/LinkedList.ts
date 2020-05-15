@@ -1,17 +1,17 @@
 // @ts-ignore
 
-class LinkNode<T> {
+class LinkedNode<T> {
     data: T;
-    next: LinkNode<T>;
+    next: LinkedNode<T>;
     constructor (data: T) {
         this.data = data; // 当前节点
         this.next = null; // 下一个元素
     }
 }
 
-class LinkList<T> {
+class LinkedList<T> {
     length: number;
-    head: LinkNode<T>;
+    head: LinkedNode<T>;
     constructor () {
         this.length = 0;
         this.head = null;
@@ -25,8 +25,6 @@ class LinkList<T> {
     }
 
     getEleAt (position: number) {
-        // @ts-ignore
-        const i = 0;
         if (this._isOutOfIndex(position)) {
             return null;
         }
@@ -37,9 +35,9 @@ class LinkList<T> {
         return current;
     }
 
-    append (ele: T): LinkNode<T> {
+    append (ele: T): LinkedNode<T> {
         // @ts-ignore
-        const node = new LinkNode<T>(ele);
+        const node = new LinkedNode<T>(ele);
         const _fn = {
             frist: () => {
                 this.head = node;
@@ -65,7 +63,7 @@ class LinkList<T> {
             return null;
         }
         // @ts-ignore
-        const node = new LinkNode<T>(ele);
+        const node = new LinkedNode<T>(ele);
         const _fn = {
             frist: () => {
                 node.next = this.head;
@@ -115,18 +113,5 @@ class LinkList<T> {
         return currentNode.data;
     }
 }
-export default LinkList;
-export { LinkNode };
-const linkList = new LinkList<number>();
-linkList.append(1);
-linkList.append(2);
-linkList.append(3);
-linkList.append(4);
-linkList.append(5);
-linkList.append(6);
-linkList.append(7);
-linkList.insert(10, 3);
-console.log(JSON.stringify(linkList));
-console.log('indexof', linkList.indexOf(10));
-linkList.removeAt(3);
-console.log(JSON.stringify(linkList));
+export default LinkedList;
+export { LinkedList, LinkedNode };

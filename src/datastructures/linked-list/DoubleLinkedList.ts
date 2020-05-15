@@ -3,7 +3,7 @@
  * @Date: 2020-01-03 07:50:52
  * @Description: here is des
  */
-import LinkList from './LinkList';
+import LinkList from './LinkedList';
 class DoubleLinkedNode<T> {
     data: T;
     pre: DoubleLinkedNode<T>;
@@ -75,3 +75,5 @@ class DoubleLinkedList<T> extends LinkList<T> {
         };
     }
 }
+export default DoubleLinkedList;
+export { DoubleLinkedList, DoubleLinkedNode };
