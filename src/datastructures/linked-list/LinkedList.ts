@@ -35,8 +35,7 @@ class LinkedList<T> {
         return current;
     }
 
-    append (ele: T): LinkedNode<T> {
-        // @ts-ignore
+    append (ele: T): LinkedList<T> {
         const node = new LinkedNode<T>(ele);
         const _fn = {
             frist: () => {
@@ -52,10 +51,11 @@ class LinkedList<T> {
             }
         };
         if (this.head == null) {
-            return _fn.frist();
+            _fn.frist();
+        } else {
+            _fn.append();
         }
-
-        return _fn.append();
+        return this;
     }
 
     insert (ele: T, position: number) {

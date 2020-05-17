@@ -3,7 +3,6 @@
  * @Date: 2020-01-03 07:50:52
  * @Description: here is des
  */
-import LinkList from './LinkedList';
 class DoublyLinkedNode<T> {
     data: T;
     pre: DoublyLinkedNode<T>;
@@ -14,20 +13,37 @@ class DoublyLinkedNode<T> {
         this.next = null;
     }
 }
-class DoublyLinkedList<T> extends LinkList<T> {
+class DoublyLinkedList<T> {
     length: number;
     head: DoublyLinkedNode<T>;
     tail: DoublyLinkedNode<T>;
     constructor () {
-        super();
         this.length = 0;
         this.head = null;
         this.tail = null;
     }
 
+    _isOutOfIndex (position) {
+        if (position === undefined || position === null || position < 0 || position > this.length) {
+            return true;
+        }
+        return false;
+    }
+
+    getEleAtByPre (position: number) {
+        if (this._isOutOfIndex(position)) {
+            return null;
+        }
+        let current = this.head;
+        for (let i = 0; i < position; i++) {
+            current = current.next;
+        }
+        return current;
+    }
+
     getEleAt (position: number) {
         if (position < Math.floor(this.length / 2)) {
-            return super.getEleAt(position);
+            return this.getEleAtByPre(position);
         }
 
         let current = this.tail;
@@ -37,7 +53,7 @@ class DoublyLinkedList<T> extends LinkList<T> {
         return current;
     }
 
-    append (ele: T): DoublyLinkedNode<T> {
+    append (ele: T): DoublyLinkedList<T> {
         const node = new DoublyLinkedNode<T>(ele);
         const _fn = {
             frist: () => {
@@ -55,24 +71,86 @@ class DoublyLinkedList<T> extends LinkList<T> {
         } else {
             _fn.append();
         }
-
-        return node;
+        this.length++;
+        return this;
     }
 
-    insert (ele: T, position: number) {
-        if (this._isOutOfIndex(position)) {
-            return null;
-        }
+    prepend (ele: T): DoublyLinkedList<T> {
         const node = new DoublyLinkedNode<T>(ele);
         const _fn = {
-            head: () => {
+            frist: () => {
+                this.head = node;
+                this.tail = node;
+            },
+            prepend: () => {
                 this.head.pre = node;
                 node.next = this.head;
                 this.head = node;
-            },
-            tail: () => {},
-            other: () => {}
+            }
         };
+        if (this.head === null) {
+            _fn.frist();
+        } else {
+            _fn.prepend();
+        }
+        this.length++;
+        return this;
+    }
+
+    insert (ele: T, position: number): boolean | null | DoublyLinkedList<T> {
+        if (this._isOutOfIndex(position)) {
+            return null;
+        }
+        if (!this.head || position === 0) {
+            return this.prepend(ele);
+        }
+        if (position === this.length) {
+            return this.append(ele);
+        }
+
+        const node = new DoublyLinkedNode<T>(ele);
+        const previous = this.getEleAt(position);
+
+        const current = previous.next;
+        previous.next = node;
+        node.pre = previous;
+        node.next = current;
+
+        this.length++;
+
+        return this;
+    }
+
+    removeAt (position: number) {
+        if (this._isOutOfIndex(position) || !this.head) {
+            return null;
+        }
+        let result;
+        if (position === 0) {
+            const current = this.head.next;
+            current.pre = null;
+            this.head = current;
+            this.length--;
+            return current.data;
+        }
+
+        if (position === this.length) {
+            const current = this.tail.pre;
+            current.next = null;
+            this.tail = current;
+            this.length--;
+            return current.data;
+        }
+
+        const current = this.getEleAt(position);
+        const nexNode = current.next;
+        const preNode = current.pre;
+        preNode.next = nexNode;
+        nexNode.pre = preNode;
+
+        this.length--;
+
+        return result;
     }
 }
 export default DoublyLinkedList;
