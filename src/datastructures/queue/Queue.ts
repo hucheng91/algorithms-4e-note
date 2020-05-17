@@ -25,3 +25,5 @@ class Queue<T> {
         this.items = [];
     }
 }
+
+export default Queue;

@@ -9,19 +9,20 @@ class Stack<T> {
         return this.items.length === 0;
     }
 
-    push (ele: T) {
+    push (ele: T): void {
         this.items.push(ele);
     }
 
-    pop () {
+    pop (): T {
         this.items.pop();
     }
 
-    size () {
+    size (): number {
         return this.items.length;
     }
 
-    clear () {
+    clear (): void {
         this.items = [];
     }
 }
+export default Stack;
