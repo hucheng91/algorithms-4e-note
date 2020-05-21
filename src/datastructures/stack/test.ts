@@ -29,3 +29,34 @@ class MinStack<T> {
         return this.minStack.pop();
     }
 }
+
+// 输入: nums = [1,3,-1,-3,5,3,6,7], 和 k = 3
+// 输出: [3,3,5,5,6,7]
+// 解释:
+//   滑动窗口的位置                最大值
+// ---------------               -----
+// [1  3  -1] -3  5  3  6  7       3
+//  1 [3  -1  -3] 5  3  6  7       3
+//  1  3 [-1  -3  5] 3  6  7       5
+//  1  3  -1 [-3  5  3] 6  7       5
+//  1  3  -1  -3 [5  3  6] 7       6
+//  1  3  -1  -3  5 [3  6  7]      7
+
+function maxSlidingWindow (nums, k) {
+    const result = [];
+    const window = [];
+    for (let index = 0; index < nums.length; index++) {
+        if (index - window[0] > k - 1) {
+            window.shift();
+        }
+        let j = window.length - 1;
+        while (j >= 0 && nums[window[j]] <= nums[index]) {
+            j--;
+            window.pop();
+        }
+        window.push(index);
+        if (index >= k - 1) {
+            result.push(nums[window[0]]);
+        }
+    }
+}
