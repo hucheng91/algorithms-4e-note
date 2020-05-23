@@ -17,7 +17,7 @@ class LinkedList<T> {
         this.head = null;
     }
 
-    protected _isOutOfIndex (position) {
+    protected _isOutOfIndex (position: number) {
         if (position === undefined || position === null || position < 0 || position > this.length) {
             return true;
         }
