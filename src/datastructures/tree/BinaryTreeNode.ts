@@ -1,152 +1,159 @@
-/*
- * @Author: hucheng
- * @Date: 2020-05-23 10:20:08
- * @Description: 二叉树节点
- */
-import Comparator from '../../utiils/Comparator';
-export default class BinaryTreeNode {
-    left: BinaryTreeNode;
-    right: BinaryTreeNode;
-    parent: BinaryTreeNode;
-    value: number;
-    nodeComparator: Comparator;
-    constructor (value: number) {
-        this.value = value;
-        this.nodeComparator = new Comparator();
+import { Compare, defaultCompare, ICompareFunction } from '../../utiils';
+import { Node } from './Node';
+
+export default class BinarySearchTree<T> {
+    protected root: Node<T>;
+
+    constructor (protected compareFn: ICompareFunction<T> = defaultCompare) {}
+
+    insert (key: T) {
+        // special case: first key
+        if (this.root == null) {
+            this.root = new Node(key);
+        } else {
+            this.insertNode(this.root, key);
+        }
     }
 
-    get leftHeight (): number {
-        if (!this.left) {
-            return 0;
+    protected insertNode (node: Node<T>, key: T) {
+        if (this.compareFn(key, node.key) === Compare.LESS_THAN) {
+            if (node.left == null) {
+                node.left = new Node(key);
+            } else {
+                this.insertNode(node.left, key);
+            }
+        } else if (node.right == null) {
+            node.right = new Node(key);
+        } else {
+            this.insertNode(node.right, key);
         }
-
-        return this.left.height + 1;
     }
 
-    get rightHeight (): number {
-        if (!this.right) {
-            return 0;
-        }
-
-        return this.right.height + 1;
+    getRoot () {
+        return this.root;
     }
 
-    get height (): number {
-        return Math.max(this.leftHeight, this.rightHeight);
+    search (key: T) {
+        return this.searchNode(this.root, key);
     }
 
-    get balanceFactor (): number {
-        return this.leftHeight - this.rightHeight;
-    }
-
-    get uncle (): BinaryTreeNode {
-        if (!this.parent) {
-            return undefined;
-        }
-
-        if (!this.parent.parent) {
-            return undefined;
-        }
-
-        if (!this.parent.parent.left || !this.parent.parent.right) {
-            return undefined;
-        }
-
-        if (this.nodeComparator.equal(this.parent, this.parent.parent.left)) {
-            return this.parent.parent.right;
-        }
-
-        return this.parent.parent.left;
-    }
-
-    setValue (value: number): BinaryTreeNode {
-        this.value = value;
-
-        return this;
-    }
-
-    setLeft (node: BinaryTreeNode): BinaryTreeNode {
-        if (this.left) {
-            this.left.parent = null;
-        }
-
-        this.left = node;
-
-        if (this.left) {
-            this.left.parent = this;
-        }
-
-        return this;
-    }
-
-    setRight (node: BinaryTreeNode): BinaryTreeNode {
-        if (this.right) {
-            this.right.parent = null;
-        }
-
-        this.right = node;
-
-        if (node) {
-            this.right.parent = this;
-        }
-
-        return this;
-    }
-
-    removeChild (nodeToRemove: BinaryTreeNode): boolean {
-        if (this.left && this.nodeComparator.equal(this.left, nodeToRemove)) {
-            this.left = null;
-            return true;
-        }
-
-        if (this.right && this.nodeComparator.equal(this.right, nodeToRemove)) {
-            this.right = null;
-            return true;
-        }
-
-        return false;
-    }
-
-    replaceChild (nodeToReplace: BinaryTreeNode, replacementNode: BinaryTreeNode): boolean {
-        if (!nodeToReplace || !replacementNode) {
+    private searchNode (node: Node<T>, key: T): boolean {
+        if (node == null) {
             return false;
         }
 
-        if (this.left && this.nodeComparator.equal(this.left, nodeToReplace)) {
-            this.left = replacementNode;
-            return true;
+        if (this.compareFn(key, node.key) === Compare.LESS_THAN) {
+            return this.searchNode(node.left, key);
+        } else if (this.compareFn(key, node.key) === Compare.BIGGER_THAN) {
+            return this.searchNode(node.right, key);
         }
-
-        if (this.right && this.nodeComparator.equal(this.right, nodeToReplace)) {
-            this.right = replacementNode;
-            return true;
-        }
-
-        return false;
+        // key is equal to node.item
+        return true;
     }
 
-    static copyNode (sourceNode: BinaryTreeNode, targetNode: BinaryTreeNode): void {
-        targetNode.setValue(sourceNode.value);
-        targetNode.setLeft(sourceNode.left);
-        targetNode.setRight(sourceNode.right);
+    inOrderTraverse (callback: Function) {
+        this.inOrderTraverseNode(this.root, callback);
     }
 
-    traverseInOrder (): BinaryTreeNode[] {
-        let traverse: BinaryTreeNode[] = [];
-
-        if (this.left) {
-            traverse = traverse.concat(this.left.traverseInOrder());
+    private inOrderTraverseNode (node: Node<T>, callback: Function) {
+        if (node != null) {
+            this.inOrderTraverseNode(node.left, callback);
+            callback(node.key);
+            this.inOrderTraverseNode(node.right, callback);
         }
-
-        traverse.push(this.value);
-        if (this.right) {
-            traverse = traverse.concat(this.right.traverseInOrder());
-        }
-
-        return traverse;
     }
 
-    toString () {
-        return this.traverseInOrder().toString();
+    preOrderTraverse (callback: Function) {
+        this.preOrderTraverseNode(this.root, callback);
+    }
+
+    private preOrderTraverseNode (node: Node<T>, callback: Function) {
+        if (node != null) {
+            callback(node.key);
+            this.preOrderTraverseNode(node.left, callback);
+            this.preOrderTraverseNode(node.right, callback);
+        }
+    }
+
+    postOrderTraverse (callback: Function) {
+        this.postOrderTraverseNode(this.root, callback);
+    }
+
+    private postOrderTraverseNode (node: Node<T>, callback: Function) {
+        if (node != null) {
+            this.postOrderTraverseNode(node.left, callback);
+            this.postOrderTraverseNode(node.right, callback);
+            callback(node.key);
+        }
+    }
+
+    min () {
+        return this.minNode(this.root);
+    }
+
+    protected minNode (node: Node<T>) {
+        let current = node;
+        while (current != null && current.left != null) {
+            current = current.left;
+        }
+        return current;
+    }
+
+    max () {
+        return this.maxNode(this.root);
+    }
+
+    protected maxNode (node: Node<T>) {
+        let current = node;
+        while (current != null && current.right != null) {
+            current = current.right;
+        }
+        return current;
+    }
+
+    remove (key: T) {
+        this.root = this.removeNode(this.root, key);
+    }
+
+    protected removeNode (node: Node<T>, key: T) {
+        if (node == null) {
+            return null;
+        }
+
+        if (this.compareFn(key, node.key) === Compare.LESS_THAN) {
+            node.left = this.removeNode(node.left, key);
+            return node;
+        } else if (this.compareFn(key, node.key) === Compare.BIGGER_THAN) {
+            node.right = this.removeNode(node.right, key);
+            return node;
+        } else {
+            // key is equal to node.item
+
+            // handle 3 special conditions
+            // 1 - a leaf node
+            // 2 - a node with only 1 child
+            // 3 - a node with 2 children
+
+            // case 1
+            if (node.left == null && node.right == null) {
+                node = null;
+                return node;
+            }
+
+            // case 2
+            if (node.left == null) {
+                node = node.right;
+                return node;
+            } else if (node.right == null) {
+                node = node.left;
+                return node;
+            }
+
+            // case 3
+            const aux = this.minNode(node.right);
+            node.key = aux.key;
+            node.right = this.removeNode(node.right, aux.key);
+            return node;
+        }
     }
 }
