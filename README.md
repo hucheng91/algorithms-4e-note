@@ -8,4 +8,3 @@
 ## 数据结构
  - [LinkList](./datastructures/LinkList.ts)
  - [DoubleLinkedList](./datastructures/DoubleLinkedList.ts)
-
