@@ -55,6 +55,21 @@ export default class BinarySearchTree<T> {
         this.inOrderTraverseNode(this.root, callback);
     }
 
+    inOrderTraverseNoRecursive (callback: Function) {
+        const result = [];
+        const stack = [];
+        let current = this.root;
+        while (current || stack.length > 0) {
+            while (current) {
+                stack.push(current);
+                current = current.left;
+            }
+            current = stack.pop();
+            result.push(current.key);
+            current = current.right;
+        }
+    }
+
     /**
      * 中序遍历
      * @param node
@@ -85,12 +100,51 @@ export default class BinarySearchTree<T> {
         }
     }
 
+    preOrderTraverseNoRecursive (callback: Function) {
+        const result = [];
+        const stack = [];
+        let current = this.root;
+        while (current && stack.length > 0) {
+            while (current) {
+                result.push(current.key);
+                stack.push(current);
+                current = current.left;
+            }
+            current = stack.pop();
+            current = current.right;
+        }
+    }
+
     /**
      * 后续遍历
      * @param callback
      */
     postOrderTraverse (callback: Function) {
         this.postOrderTraverseNode(this.root, callback);
+    }
+
+    postOrderTraverseNoRecursive (callback: Function) {
+        const result = [];
+        const stack = [];
+        let last = null; // 标记上一个访问的节点
+        let current = this.root;
+        while (current || stack.length > 0) {
+            while (current) {
+                stack.push(current);
+                current = current.left;
+            }
+            current = stack[stack.length - 1];
+            if (!current.right || current.right === last) {
+                current = stack.pop();
+                result.push(current.key);
+                console.log(current.key);
+                last = current;
+                current = null; // 继续弹栈
+            } else {
+                current = current.right;
+            }
+        }
+        return result;
     }
 
     private postOrderTraverseNode (node: Node<T>, callback: Function) {
