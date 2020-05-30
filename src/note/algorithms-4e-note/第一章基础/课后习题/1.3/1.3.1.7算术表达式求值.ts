@@ -21,7 +21,6 @@ function test (str: any) {
         if (op === 'sqrt') { result = Math.sqrt(current); }
         return result;
     };
-    debugger;
     for (let index = 0; index < strArray.length; index++) {
         const element = strArray[index];
         if (element === '(') {
