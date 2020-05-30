@@ -3,8 +3,7 @@
  * @Date: 2019-12-31 08:31:41
  * @Description: here is des
  -->
-# 数据结构与算法学习
 
-## 数据结构
- - [LinkList](./datastructures/LinkList.ts)
- - [DoubleLinkedList](./datastructures/DoubleLinkedList.ts)
+# 算法 第四版学习笔记，JavaScript 实现
+
+![](https://pic3.zhimg.com/c783f4d1645a1fc5566c25da21da61ce_b.jpg)
