@@ -84,7 +84,7 @@ class LinkedList<T> {
         return true;
     }
 
-    indexOf (ele) {
+    indexOf (ele: T) {
         let current = this.head;
         for (let i = 0; i < this.length; i++) {
             if (current.data === ele) {
@@ -111,6 +111,29 @@ class LinkedList<T> {
         }
         this.length--;
         return currentNode.data;
+    }
+
+    [Symbol.iterator] () {
+        let pointer = 0;
+        let components: LinkedNode<T> = this.head;
+        const length = this.length;
+        return {
+            next (): IteratorResult<LinkedNode<T>> {
+                if (pointer < length && components.next.next) {
+                    pointer++;
+                    components = components.next;
+                    return {
+                        done: false,
+                        value: components
+                    };
+                } else {
+                    return {
+                        done: true,
+                        value: null
+                    };
+                }
+            }
+        };
     }
 }
 export default LinkedList;
