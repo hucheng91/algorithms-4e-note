@@ -4,7 +4,7 @@
  * @Description: 栈是后进先出，叠盘子
  */
 class Stack<T> {
-    private items: T[];
+    private items: T[] = [];
     isEmpty () {
         return this.items.length === 0;
     }
@@ -14,11 +14,15 @@ class Stack<T> {
     }
 
     pop (): T {
-        this.items.pop();
+        return this.items.pop();
     }
 
     size (): number {
         return this.items.length;
+    }
+
+    peek (): T {
+        return this.items[this.size() - 1];
     }
 
     clear (): void {

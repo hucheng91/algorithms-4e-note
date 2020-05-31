@@ -4,7 +4,7 @@
  * @Description: 先进先出
  */
 class Queue<T> {
-    private items: T[];
+    private items: T[] = [];
     isEmpty () {
         return this.items.length === 0;
     }
@@ -23,6 +23,27 @@ class Queue<T> {
 
     clear () {
         this.items = [];
+    }
+
+    [Symbol.iterator] () {
+        let pointer = 0;
+        const components = this.items;
+
+        return {
+            next (): IteratorResult<T> {
+                if (pointer < components.length) {
+                    return {
+                        done: false,
+                        value: components[pointer++]
+                    };
+                } else {
+                    return {
+                        done: true,
+                        value: null
+                    };
+                }
+            }
+        };
     }
 }
 
