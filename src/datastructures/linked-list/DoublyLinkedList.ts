@@ -7,7 +7,7 @@ class DoublyLinkedNode<T> {
     data: T;
     pre: DoublyLinkedNode<T>;
     next: DoublyLinkedNode<T>;
-    constructor (data) {
+    constructor (data: T) {
         this.data = data;
         this.pre = null;
         this.next = null;

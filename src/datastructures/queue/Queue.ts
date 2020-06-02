@@ -13,8 +13,8 @@ class Queue<T> {
         this.items.push(ele);
     }
 
-    dequeue () {
-        this.items.unshift();
+    dequeue (): T {
+        return this.items.shift();
     }
 
     size () {
