@@ -8,7 +8,7 @@ import { LinkedNode } from '../../../../../datastructures/linked-list/LinkedList
 
 // 前移编码
 
-class MoveToFrontParam {
+interface MoveToFrontParam {
     key: any;
     value: any
 }
