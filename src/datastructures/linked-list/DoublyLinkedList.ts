@@ -23,7 +23,7 @@ class DoublyLinkedList<T> {
         this.tail = null;
     }
 
-    _isOutOfIndex (position) {
+    _isOutOfIndex (position: number) {
         if (position === undefined || position === null || position < 0 || position > this.length) {
             return true;
         }
