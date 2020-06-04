@@ -48,7 +48,7 @@ class MoveToFront {
             return;
         }
         let current = this.first
-
+        let resultNode = null
         while (current) {
             if (current.data.key === key) {
                 if (current.next) {
@@ -56,12 +56,13 @@ class MoveToFront {
                 } else {
                     current.next = null
                 }
+                resultNode = current
             }
             current = current.next
         }
         this.keyMap.delete(key)
         this.size--
-        return current.data
+        return resultNode.data
     }
 }
 
