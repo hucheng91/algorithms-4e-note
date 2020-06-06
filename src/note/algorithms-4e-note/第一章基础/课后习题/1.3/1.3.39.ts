@@ -5,7 +5,7 @@
  */
 import Queue from '../../../../../datastructures/queue/Queue'
 
-// 环形缓存区
+// 环形缓冲区
 
 class RightBuffer<T> {
     private ringBuffer: T[]
